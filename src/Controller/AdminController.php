@@ -116,13 +116,33 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $postTagsService->addTags($post, $form->getData());
-            return $this->redirectToRoute('post_index');
+
+            return $this->redirectToRoute('add_tags', [
+                'id' => $post->getId()
+            ]);
         }
 
-        return $this->render('admin/_form.html.twig', [
+        return $this->render('admin/tags.html.twig', [
             'form' => $form->createView(),
+            'postTags' => $post->getPostTags()
 
         ]);
+    }
+
+    /**
+     * @Route("/{id}", name="tag_delete", methods="DELETE", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param Post $post
+     * @param PostTagsServiceInterface $postTagsService
+     * @return Response
+     */
+    public function deleteTags(Request $request, Post $post, PostTags $postTags, PostTagsServiceInterface $postTagsService): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+            $postTagsService->deleteTags($post);
+        }
+
+        return $this->redirectToRoute('post_index');
     }
     
 

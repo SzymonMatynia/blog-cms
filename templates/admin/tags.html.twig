@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+<h1>Tags:</h1>
+{% for tag in postTags %}
+    <div class="col">
+    {{ tag.getTag }}
+    </div>
+{% endfor %}
+{% endblock %}

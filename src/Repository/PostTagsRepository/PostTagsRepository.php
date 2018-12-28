@@ -67,9 +67,12 @@ class PostTagsRepository extends ServiceEntityRepository implements PostTagsRepo
         }
         $this->entityManager->flush();
 
+    }
 
-
-
+    public function deleteTags($post)
+    {
+        $this->entityManager->remove($post->removePostTag());
+        $this->entityManager->flush();
     }
 
 }

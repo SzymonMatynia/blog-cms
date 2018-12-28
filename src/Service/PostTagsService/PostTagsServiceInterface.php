@@ -12,4 +12,5 @@ use App\Entity\Post;
 interface PostTagsServiceInterface
 {
     public function addTags(Post $post, $tag);
+    public function deleteTags(Post $post);
 }
