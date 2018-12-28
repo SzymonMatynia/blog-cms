@@ -22,17 +22,17 @@ $ sudo docker-compose run www doctrine:fixtures:load
 ```
 Main page:
 ```text
-http://127.0.0.31/
+http://127.0.0.30/
 ```
 Login page:
 ```text
-http://127.0.0.31/login
+http://127.0.0.30/login
 phpmyadmin:
 ```text
-http://127.0.0.34/
+http://127.0.0.39/
 ```
 Default data for login:
 ```text
 Username: user
-Password: 123
+Password: 000
 ```
