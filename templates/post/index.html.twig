@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block happyMessage %} {{ message }} {% endblock %}
+{% block title %}Post index{% endblock %}
+
+{% block jumbotron %}
+    {{ include('post/_flash_messages.html.twig') }}
+    <section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Eterxoz World</h1>
+        <p class="lead text-muted">{{ message }}</p>
+        <p>
+            <a href="#" class="btn btn-primary my-2">Main call to action</a>
+            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+        </p>
+    </div>
+    </section>{% endblock %}
+{% block body %}
+    <div class="row">
+
+        {% for post in posts %}
+
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{{ path('post_show', {'id': post.id}) }}">
+                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text={{ post.postTitle }}" alt="Card image cap">
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{ post.postBody }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Data dodania: {{ post.getCreatedAt.format('Y-m-d') }}</small>
+                            <div class="text-muted">
+                                tags:
+                                {% for tag in post.getPostTags %}
+                                    {{ tag.getTag }},
+                                {% else %}
+                                    None
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

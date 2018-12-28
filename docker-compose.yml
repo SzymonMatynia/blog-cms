@@ -1,0 +1,45 @@
+version: "3"
+services:
+  www:
+      container_name: www
+      build:
+        dockerfile: Dockerfile
+        context: .
+      environment:
+          XDEBUG_CONFIG: remote_host=192.168.1.23
+      ports:
+       - "127.0.0.30:80:80"
+      volumes:
+       - .:/var/www
+      links:
+        - database
+      networks:
+        - main
+  database:
+      container_name: database
+      image: mysql:5.7
+      environment:
+       - MYSQL_USERNAME=root
+       - MYSQL_ROOT_PASSWORD=123
+       - MYSQL_DATABASE=dockerstests
+      volumes:
+        - ./schema:/docker-entrypoint-initdb.d
+      ports:
+       - "3306:3306"
+      networks:
+        - main
+  phpmyadmin:
+      container_name: phpmyadmin
+      image: phpmyadmin/phpmyadmin
+      links:
+        - database
+      environment:
+        - MYSQL_USERNAME=root
+        - MYSQL_ROOT_PASSWORD=123
+        - PMA_ARBITRARY=1
+      ports:
+        - "127.0.0.39:80:80"
+      networks:
+        - main
+networks:
+  main:

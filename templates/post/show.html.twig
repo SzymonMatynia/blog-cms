@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+    <a class="btn btn-outline-success mr-2" href="{{ path('post_index') }}">back to list</a>
+    <hr style="width: 100%; background-color: gray; height: 1px; border-color : transparent;" />
+    <h1><strong>{{ post.postTitle }}</strong></h1>
+
+    <div class="row">
+        <div class="col mt-5">
+            {{ post.postBody }}
+        </div>
+    </div>
+    <hr style="width: 100%; background-color: gray; height: 1px; border-color : transparent;" />
+
+    <h1><strong>Questions / Comments:</strong></h1>
+    {{ include('admin/_form.html.twig') }}
+
+
+    {% for comment in post.getPostComments() %}
+
+
+    <div class="row">
+        <div class="col md-5 mt-2">
+            <strong>{{ comment.getBody() }}</strong>
+            <div class="mt-2 mb-5">
+                by <strong>{{ comment.getAuthor() }}</strong> - {{ comment.getCreatedAt().format('Y-m-d') }}
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+
+
+
+
+
+
+{% endblock %}

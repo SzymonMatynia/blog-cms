@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Post{% endblock %}
+
+{% block body %}
+    {{ include('post/_flash_messages.html.twig') }}
+    <h1>Edit Post</h1>
+
+    {{ include('admin/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    <div class="col mt-5"><a class="btn btn-outline-dark ml-5 mr-2" href="{{ path('admin') }}">back to list</a></div>
+{% endblock %}
