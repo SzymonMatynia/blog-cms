@@ -28,14 +28,11 @@ class PostController extends AbstractController
      * @param MessageGenerator $messageGenerator
      * @return Response
      */
-    public function index(PostServiceInterface $postService, MessageGenerator $messageGenerator,
-                          CustomSerializerInterface $customSerializer): Response
+    public function index(PostServiceInterface $postService, MessageGenerator $messageGenerator): Response
     {
-        $x = $customSerializer->normalizeObject($messageGenerator);
         return $this->render('post/index.html.twig', [
             'posts' => $postService->findAll(),
             'message' => $messageGenerator->getHappyMessage(),
-            'x' => $x
         ]);
     }
 
