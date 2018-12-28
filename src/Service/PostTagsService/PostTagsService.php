@@ -21,8 +21,4 @@ class PostTagsService implements PostTagsServiceInterface
     {
         $this->postTagsRepository->addTags($post, $tag);
     }
-    public function deleteTags(Post $post)
-    {
-        $this->postTagsRepository->deleteTags($post);
-    }
 }

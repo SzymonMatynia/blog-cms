@@ -58,21 +58,21 @@ class PostTagsRepository extends ServiceEntityRepository implements PostTagsRepo
     */
     public function addTags(Post $post, $tag)
     {
-        $tagArray = explode(' ', $tag->getTag());
-        foreach($tagArray as $value)
+        //$tagArray = explode(' ', $tag->getTag());
+        /*foreach($tagArray as $value)
         {
             $tag->setTag($value);
             $post->addPostTag($tag);
             $this->entityManager->persist($tag);
-        }
+            $this->entityManager->flush();
+        }*/
+
+        $post->addPostTag($tag);
+        $this->entityManager->persist($tag);
         $this->entityManager->flush();
+
 
     }
 
-    public function deleteTags($post)
-    {
-        $this->entityManager->remove($post->removePostTag());
-        $this->entityManager->flush();
-    }
 
 }

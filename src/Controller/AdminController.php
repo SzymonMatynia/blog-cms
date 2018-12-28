@@ -129,21 +129,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="tag_delete", methods="DELETE", requirements={"id"="\d+"})
-     * @param Request $request
-     * @param Post $post
-     * @param PostTagsServiceInterface $postTagsService
-     * @return Response
-     */
-    public function deleteTags(Request $request, Post $post, PostTags $postTags, PostTagsServiceInterface $postTagsService): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-            $postTagsService->deleteTags($post);
-        }
-
-        return $this->redirectToRoute('post_index');
-    }
     
 
 }

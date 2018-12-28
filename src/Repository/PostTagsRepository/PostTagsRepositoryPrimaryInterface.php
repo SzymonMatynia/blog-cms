@@ -11,5 +11,4 @@ use App\Entity\Post;
 interface PostTagsRepositoryPrimaryInterface
 {
     public function addTags(Post $post, $tag);
-    public function deleteTags($post);
 }
