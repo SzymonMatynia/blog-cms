@@ -27,6 +27,7 @@ http://127.0.0.30/
 Login page:
 ```text
 http://127.0.0.30/login
+```
 phpmyadmin:
 ```text
 http://127.0.0.39/
@@ -35,4 +36,11 @@ Default data for login:
 ```text
 Username: user
 Password: 000
+```
+phpMyAdmin data:
+```text
+server: blog
+username: root
+password: 123
+
 ```
