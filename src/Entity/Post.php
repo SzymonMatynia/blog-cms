@@ -47,12 +47,12 @@ class Post
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PostComments", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\PostComments", mappedBy="post", cascade="remove")
      */
     private $postComments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PostTags", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\PostTags", mappedBy="post", cascade="remove")
      */
     private $postTags;
 

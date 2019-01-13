@@ -22,17 +22,28 @@ use App\Service\CustomSerializer\CustomSerializerInterface;
  */
 class PostController extends AbstractController
 {
+    private $postService;
+    private $messageGenerator;
+    private $postCommentsService;
+    //todo
+    public function __construct(PostServiceInterface $postService,
+                                MessageGenerator $messageGenerator,
+                                PostCommentsServiceInterface $postCommentsService)
+    {
+        $this->postService = $postService;
+        $this->messageGenerator = $messageGenerator;
+        $this->postCommentsService = $postCommentsService;
+    }
+
     /**
      * @Route("/", name="post_index", methods="GET")
-     * @param PostServiceInterface $postService
-     * @param MessageGenerator $messageGenerator
      * @return Response
      */
-    public function index(PostServiceInterface $postService, MessageGenerator $messageGenerator): Response
+    public function index(): Response
     {
         return $this->render('post/index.html.twig', [
-            'posts' => $postService->findAll(),
-            'message' => $messageGenerator->getHappyMessage(),
+            'posts' => $this->postService->findAll(),
+            'message' => $this->messageGenerator->getHappyMessage(),
         ]);
     }
 
@@ -43,10 +54,9 @@ class PostController extends AbstractController
     * @Route("/{id}", name="post_show", methods="GET|POST", requirements={"id"="\d+"})
     * @param Request $request
     * @param Post $post
-    * @param PostCommentsServiceInterface $postCommentsService
     * @return Response
     */
-    public function show(Request $request, Post $post, PostCommentsServiceInterface $postCommentsService): Response
+    public function show(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostCommentsType::class);
         $form->handleRequest($request);
@@ -54,7 +64,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
 
-            $postCommentsService->addComment($post, $form->getData());
+            $this->postCommentsService->addComment($post, $form->getData());
 
             return $this->redirectToRoute('post_show', [
                 'id' => $post->getId()
