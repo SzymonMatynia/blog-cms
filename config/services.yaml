@@ -26,6 +26,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+                            ######################################### service manual wiring example
+                            #    app.entity.post:                   # THATS JUST EXAMPLE,
+                            #        class: App\Entity\Post         # YOU COULD EASILY DO IT YOUR DESIRED WAY.
+                            #                                       #
+                            #    App\Controller\AdminController:    #
+                            #        arguments:                     #
+                            #            $post: '@app.entity.post'  #
+                            #########################################
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

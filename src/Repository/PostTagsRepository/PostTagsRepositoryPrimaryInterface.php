@@ -8,6 +8,7 @@
 
 namespace App\Repository\PostTagsRepository;
 use App\Entity\Post;
+use App\Entity\PostTags;
 interface PostTagsRepositoryPrimaryInterface
 {
     public function addTags(Post $post, $tag);

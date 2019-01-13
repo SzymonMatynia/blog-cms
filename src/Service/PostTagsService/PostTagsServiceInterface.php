@@ -8,6 +8,7 @@
 
 namespace App\Service\PostTagsService;
 use App\Entity\Post;
+use App\Entity\PostTags;
 
 interface PostTagsServiceInterface
 {
