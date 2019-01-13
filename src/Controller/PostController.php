@@ -24,7 +24,7 @@ class PostController extends AbstractController
 {
     /**
      * @Route("/", name="post_index", methods="GET")
-     * @param PostRepositoryPrimaryInterface $postRepository
+     * @param PostServiceInterface $postService
      * @param MessageGenerator $messageGenerator
      * @return Response
      */
@@ -51,18 +51,14 @@ class PostController extends AbstractController
         $form = $this->createForm(PostCommentsType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
 
             $postCommentsService->addComment($post, $form->getData());
 
             return $this->redirectToRoute('post_show', [
                 'id' => $post->getId()
             ]);
-            /*return $this->render('post/show.html.twig', [
-                'post' => $post,
-                'form' => $form->createView()
-
-            ]);*/
         }
 
         return $this->render('post/show.html.twig', [

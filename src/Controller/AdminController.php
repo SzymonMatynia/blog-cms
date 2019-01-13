@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Form\PostTagsType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/admin")
@@ -102,10 +104,10 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/addtags", name="add_tags", methods="GET|POST", requirements={"id"="\d+"})
+     * @Route("/{id}/tags/add", name="add_tags", methods="GET|POST", requirements={"id"="\d+"})
      * @param Request $request
      * @param Post $post
-     * @param PostTagsServiceInterface $postTagsService
+     * @param PostTagsService $postTagsService
      * @return Response
      */
     public function newTags(Request $request, Post $post, PostTagsService $postTagsService): Response
@@ -124,7 +126,8 @@ class AdminController extends AbstractController
 
         return $this->render('admin/tags.html.twig', [
             'form' => $form->createView(),
-            'postTags' => $post->getPostTags()
+            'postTags' => $post->getPostTags(),
+            'post' => $post
 
         ]);
     }

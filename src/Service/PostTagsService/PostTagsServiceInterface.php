@@ -8,9 +8,9 @@
 
 namespace App\Service\PostTagsService;
 use App\Entity\Post;
+use App\Entity\PostTags;
 
 interface PostTagsServiceInterface
 {
     public function addTags(Post $post, $tag);
-
 }

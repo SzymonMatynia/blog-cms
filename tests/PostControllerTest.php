@@ -4,10 +4,17 @@ namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class PostControllerTest extends TestCase
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class PostControllerTest extends WebTestCase
 {
-    public function testSomething()
+    public function testIndex()
     {
-        $this->assertTrue(true);
+        $client = static::createClient();
+
+        $client->request('GET', '/');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
 }

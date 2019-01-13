@@ -19,9 +19,11 @@ class PostTagsRepository extends ServiceEntityRepository implements PostTagsRepo
 {
     private $customSerializer;
     private $entityManager;
+    //private $postTags;
     public function __construct(RegistryInterface $registry,
                                 EntityManagerInterface $entityManager,
-                                CustomSerializerInterface $customSerializer)
+                                CustomSerializerInterface $customSerializer
+                                )
     {
         $this->customSerializer = $customSerializer;
         $this->entityManager = $entityManager;
@@ -61,22 +63,15 @@ class PostTagsRepository extends ServiceEntityRepository implements PostTagsRepo
         $tagArray = explode(' ', $tag->getTag());
         foreach($tagArray as $value)
         {
-            $postTag = new PostTags();
+            $postTag =  new PostTags();
             $postTag->setTag($value)->setPost($post);
             $this->entityManager->persist($postTag);
-            
-            //$tag->setPost($post)->setTag($value);
-            //$post->addPostTag($tag);
-            //$this->entityManager->persist($tag);
 
         }
 
-        /*$post->addPostTag($tag);
-        $this->entityManager->persist($tag);*/
         $this->entityManager->flush();
 
 
     }
-
 
 }
