@@ -24,32 +24,40 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
  */
 class AdminController extends AbstractController
 {
+    private $postService;
+    private $postTagsService;
+
+
+    public function __construct(PostServiceInterface $postService, PostTagsServiceInterface $postTagsService)
+    {
+        $this->postService = $postService;
+        $this->postTagsService = $postTagsService;
+    }
 
 
     /**
      * @Route("/", name="admin", methods="GET")
      */
-    public function index(PostServiceInterface $postService)
+    public function index()
     {
         return $this->render('admin/index.html.twig', [
-            'posts' => $postService->findAll(),
+            'posts' => $this->postService->findAll(),
         ]);
     }
 
     /**
      * @Route("/new", name="post_new", methods="GET|POST")
      * @param Request $request
-     * @param PostServiceInterface $postService
      * @return Response
      */
-    public function new(Request $request, PostServiceInterface $postService, PostTagsServiceInterface $postTagsService): Response
+    public function new(Request $request): Response
     {
         $form = $this->createForm(PostType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postService->addPost($form->getData());
+            $this->postService->addPost($form->getData());
             return $this->redirectToRoute('post_index');
         }
 
@@ -63,11 +71,9 @@ class AdminController extends AbstractController
      * @Route("/{id}/edit", name="post_edit", methods="GET|POST", requirements={"id"="\d+"})
      * @param Request $request
      * @param Post $post
-     * @param PostServiceInterface $postService
      * @return Response
-     * @throws \Exception
      */
-    public function edit(Request $request, Post $post, PostServiceInterface $postService): Response
+    public function edit(Request $request, Post $post): Response
     {
 
         $form = $this->createForm(PostType::class, $post);
@@ -75,7 +81,7 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postService->editPost($post, $form->getData());
+            $this->postService->editPost($post, $form->getData());
 
             return $this->redirectToRoute('post_edit', ['id' => $post->getId()]);
 
@@ -91,13 +97,12 @@ class AdminController extends AbstractController
      * @Route("/{id}", name="post_delete", methods="DELETE", requirements={"id"="\d+"})
      * @param Request $request
      * @param Post $post
-     * @param PostServiceInterface $postService
      * @return Response
      */
-    public function delete(Request $request, Post $post, PostServiceInterface $postService): Response
+    public function delete(Request $request, Post $post): Response
     {
         if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
-            $postService->deletePost($post);
+            $this->postService->deletePost($post);
         }
 
         return $this->redirectToRoute('post_index');
@@ -107,17 +112,16 @@ class AdminController extends AbstractController
      * @Route("/{id}/tags/add", name="add_tags", methods="GET|POST", requirements={"id"="\d+"})
      * @param Request $request
      * @param Post $post
-     * @param PostTagsService $postTagsService
      * @return Response
      */
-    public function newTags(Request $request, Post $post, PostTagsService $postTagsService): Response
+    public function newTags(Request $request, Post $post): Response
     {
         $form = $this->createForm(PostTagsType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $postTagsService->addTags($post, $form->getData());
+            $this->postTagsService->addTags($post, $form->getData());
 
             return $this->redirectToRoute('add_tags', [
                 'id' => $post->getId()
